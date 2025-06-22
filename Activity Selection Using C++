@@ -1,0 +1,41 @@
+#include<bits/stdc++.h> 
+using namespace std; 
+
+struct Activity 
+{ 
+    string name; 
+    int start, end; 
+}; 
+
+bool comp(Activity a1, Activity a2) 
+{ 
+    return (a1.end < a2.end); 
+} 
+
+int main() 
+{ 
+    int n; 
+    cout << "Enter the number of activities: "; 
+    cin >> n; 
+    Activity arr[n]; 
+    for(int i=0; i<n; i++) 
+    { 
+        cin >> arr[i].name >> arr[i].start >> arr[i].end; 
+    } 
+    sort(arr, arr+n, comp); 
+    cout << "Selected Activities:\n"; 
+    int count = 1; 
+    cout << arr[0].name << " (" << arr[0].start << "-" << arr[0].end << ")\n"; 
+    int lastEnd = arr[0].end; 
+    for(int i=1; i<n; i++) 
+    { 
+        if(arr[i].start >= lastEnd) 
+        { 
+            cout << arr[i].name << " (" << arr[i].start << "-" << arr[i].end << ")\n"; 
+            lastEnd = arr[i].end; 
+            count++; 
+        } 
+    } 
+    cout << "Maximum number of non-overlapping activities: " << count << endl; 
+    return 0; 
+}
