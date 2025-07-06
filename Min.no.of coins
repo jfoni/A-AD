@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+#include <iomanip>
+using namespace std;
+
+int main()
+{
+    int n;
+    cout << "Enter the number of coins: ";
+    cin >> n;
+    int coin[n];
+    for(int i=0;i<n;i++)
+    {
+        cin >> coin[i];
+    }
+
+    int a;
+    cout << "Enter the amount: ";
+    cin >> a;
+
+    int table[n+1][a+1];
+
+    for(int i=0;i<=n;i++)
+    {
+        table[i][0]=0;
+    }
+    for(int j=1;j<=a;j++)
+    {
+        table[0][j]=a+1;
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=a;j++){
+            if(j>=coin[i-1]){
+                table[i][j]=min(table[i-1][j],(1+table[i][j-coin[i-1]]));
+            }
+            else{
+                table[i][j]=table[i-1][j];
+            }
+        }
+    }
+
+    if(table[n][a]>a){
+        cout << "Not possible the amount with this coins." <<endl;
+    }
+    else{
+        cout << "Minimum number of coins: " <<table[n][a] <<endl;
+
+    cout << "Coins Used: ";
+    int i=n, j=a;
+    while(j>0 && i>0){
+        if(table[i][j]==table[i-1][j]){
+            i--;
+        }
+        else{
+            cout << coin[i-1] << " ";
+            j=j-coin[i-1];
+        }
+    }
+    cout <<endl;
+    }
+
+
+    for(int i=0;i<=n;i++){
+        for(int j=1;j<=a;j++){
+            cout<< setw(4) <<table[i][j];
+        }
+        cout << endl;
+    }
+}
+
