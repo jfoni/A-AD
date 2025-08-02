@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// BFS function that returns the traversal order
+vector<int> BFS(int start_node, vector<int> adj[], int node) {
+    vector<int> result;
+    vector<bool> visit(node + 1, false);
+    queue<int> q;
+
+    q.push(start_node);
+    visit[start_node] = true;
+
+    while(!q.empty()) {
+        int fr = q.front();
+        q.pop();
+        result.push_back(fr);
+
+        for(int i = 0; i < adj[fr].size(); i++) {
+            int next = adj[fr][i];
+            if(!visit[next]) {
+                visit[next] = true;
+                q.push(next);
+            }
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int node, edge, start_node;
+    cout << "Enter number of nodes: ";
+    cin >> node;
+    cout << "Enter number of edges: ";
+    cin >> edge;
+
+    vector<int> adj[node + 1];
+
+    cout << "Enter the edges: " << endl;
+    for(int i = 0; i < edge; i++) {
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a); // undirected
+    }
+
+    cout << "Enter the starting node: ";
+    cin >> start_node;
+
+    vector<int> bfs_result = BFS(start_node, adj, node);
+
+    cout << "BFS result: " << endl;
+    for(int val : bfs_result)
+        cout << val << endl;
+
+    return 0;
+}
